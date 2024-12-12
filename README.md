@@ -1,4 +1,4 @@
-# zellij.fish
+# fish-zellij.fish
 
 ## Description
 
@@ -18,7 +18,7 @@ https://github.com/kpbaks/zellij.fish/assets/57013304/0c20c6a3-f618-4c28-93d8-82
 ## Installation
 
 ```fish
-fisher install kpbaks/zellij.fish
+fisher install LaurentFough/fish-zellij.fish
 ```
 
 ## Customization
