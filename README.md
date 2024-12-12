@@ -2,7 +2,7 @@
 
 ## Description
 
-`zellij.fish` is a [fish](https://fishshell.com) plugin that integrates with [zellij](https://zellij.dev/).
+`fish-zellij.fish` is a [fish](https://fishshell.com) plugin that integrates with [zellij](https://zellij.dev/).
 
 It comes with the following features:
 
