@@ -16,6 +16,8 @@ function __zellij::auto_start
             end
         end
     end
+
+#= start(auto) zellij
 #set -q ZELLIJ_AUTO_START || set -U ZELLIJ_AUTO_START true
 #set -q ZELLIJ_AUTO_EXIT || set -U ZELLIJ_AUTO_EXIT true
 #
@@ -24,6 +26,10 @@ function __zellij::auto_start
 #if type zellij-auto-start >/dev/null 2>&1
 #    zellij-auto-start
 #end
+
+#= start(auto) zellij
+#eval ( zellij setup --generate-auto-start fish | string collect )
+
 end
 
 
