@@ -1,7 +1,7 @@
-# `__zellij::` is used as a namespace prefix for all functions in this file
-# to avoid name collisions and to be "hidden" from the user. That is, it seems very improbable that a user would
-# have any other function or program on their system with the same prefix, leading to some annoyance
-# when tab completing function names in interactive mode.
+#= `__zellij::` is used as a namespace prefix for all functions in this file
+#= to avoid name collisions and to be "hidden" from the user. That is, it seems very improbable that a user would
+#= have any other function or program on their system with the same prefix, leading to some annoyance
+#= when tab completing function names in interactive mode.
 function __zellij::check_dependencies
     if not command --query zellij
         printf "%serror:%s %s\n" (set_color red) (set_color normal) "zellij (https://github.com/zellij-org/zellij) not installed." >&2
@@ -16,17 +16,17 @@ function __zellij::check_dependencies
 end
 
 function __zellij::on::install --on-event zellij_install
-    # Set universal variables, create bindings, and other initialization logic.
+    #= Set universal variables, create bindings, and other initialization logic.
     __zellij::check_dependencies
 end
 
 # function __zellij::on::update --on-event zellij_update
-#     # Migrate resources, print warnings, and other update logic.
+#     #= Migrate resources, print warnings, and other update logic.
 #     # echo
 # end
 
 function __zellij::on::uninstall --on-event zellij_uninstall
-    # Erase "private" functions, variables, bindings, and other uninstall logic.
+    #= Erase "private" functions, variables, bindings, and other uninstall logic.
     for f in (functions --all)
         if string match --regex --quiet -- "^__zellij::" $f
             functions --erase $f
@@ -35,10 +35,10 @@ function __zellij::on::uninstall --on-event zellij_uninstall
 end
 
 status is-interactive; or return 0
-set --query ZELLIJ; or return 0 # don't do anything if not inside zellij
+set --query ZELLIJ; or return 0 #= don't do anything if not inside zellij
 __zellij::check_dependencies; or return 0
 
-# abbreviations
+#= abbreviations
 function __zellij::abbr::zellij
     set -l expansion zellij
     set -l zellij_layout_files_in_cwd
@@ -79,7 +79,7 @@ abbr -a zr zellij run --
 abbr -a zrf zellij run --floating --
 
 
-# NOTE: Use ZELLIJ_FISH as a namespace prefix for all variables to avoid name collisions.
+#= NOTE: Use ZELLIJ_FISH as a namespace prefix for all variables to avoid name collisions.
 set --query ZELLIJ_FISH_KEYMAP_OPEN_URL; or set --global ZELLIJ_FISH_KEYMAP_OPEN_URL \eo # \eo is alt+o
 set --query ZELLIJ_FISH_KEYMAP_ADD_URL_AT_CURSOR; or set --global ZELLIJ_FISH_KEYMAP_ADD_URL_AT_CURSOR \ea # \ea is alt+a
 set --query ZELLIJ_FISH_KEYMAP_COPY_URL_TO_CLIPBOARD; or set --global ZELLIJ_FISH_KEYMAP_COPY_URL_TO_CLIPBOARD \ec # \ec is alt+c
@@ -150,7 +150,7 @@ end
 #     end
 # end
 
-# TODO: improve and write test cases
+#= TODO: improve and write test cases
 function __zellij::abbreviate_path -a path
     if test $path = $HOME
         printf '~\n'
@@ -193,18 +193,18 @@ function __zellij::update_tab_name --argument-names last_status
 
     # set -l title (printf "><>%s: %s %s" $status_component (prompt_cwd) $job_component)
     # if test $title = $__zellij_fish_previous_tab_title
-    #     # Skip updating the tab name if it hasn't changed
+    #     #= Skip updating the tab name if it hasn't changed
     #     return 0
     # end
 
     # set --global __zellij_fish_previous_tab_title $title
 
-    # TODO: why does prompt_pwd not work when in a subshell
+    #= TODO: why does prompt_pwd not work when in a subshell
     # command zellij action rename-tab (prompt_cwd)
     command zellij action rename-tab (__zellij::abbreviate_path $PWD)
 end
 
-# TODO: document
+#= TODO: document
 set --query zellij_fish_update_tab_name_when_cwd_changes
 or set --universal zellij_fish_update_tab_name_when_cwd_changes 1
 
@@ -214,16 +214,16 @@ if test $zellij_fish_update_tab_name_when_cwd_changes -eq 1
     end
 end
 
-# TODO: document
+#= TODO: document
 set --query zellij_fish_update_tab_name_on_preexec
 or set --universal zellij_fish_update_tab_name_on_preexec 0
 
-# TODO: use
+#= TODO: use
 set --query zellij_fish_update_tab_name_on_preexec_blacklist
 or set --universal zellij_fish_update_tab_name_on_preexec_blacklist pwd cd rm mv
 
 if test $zellij_fish_update_tab_name_on_preexec -eq 1
-    # TODO: maybe show the command that is about to be run, but exclude common commands like `pwd`, `cd`, `rm`, `mv`, etc.
+    #= TODO: maybe show the command that is about to be run, but exclude common commands like `pwd`, `cd`, `rm`, `mv`, etc.
     function __zellij::hooks::update_tab_name_on_preexec --on-event fish_preexec
         __zellij::update_tab_name $status
     end
@@ -235,12 +235,12 @@ if test $ZELLIJ_FISH_RENAME_TAB_TITLE -eq 1
 
     # function __zellij::update_tab_name_on_postexec --on-event fish_postexec
     # function __zellij::update_tab_name_on_postexec --on-event fish_preexec
-    #     # TODO: when in an editor like `hx` to not show the path component as well for the dir
+    #     #= TODO: when in an editor like `hx` to not show the path component as well for the dir
     #     # $argv
     #     __zellij::update_tab_name $status
     # end
 
-    # TODO: <kpbaks 2023-09-06 11:23:58> update the title with the command about to be executed $argv
+    #= TODO: <kpbaks 2023-09-06 11:23:58> update the title with the command about to be executed $argv
     # function __zellij::update_tab_title_on_preexec --on-event fish_preexec
     # 	set --global __zellij.fish_previous_tab_title ""
     # end
@@ -259,11 +259,11 @@ function __zellij::screen::dump
 end
 
 function __zellij::screen::get_visible_paths
-    # FIXME: does not capture every true positive yet
+    #= FIXME: does not capture every true positive yet
     __zellij::screen::dump \
         | string match --all --regex --groups-only "(\S+[^/])" \
         | while read p
-        # Only output paths that exists
+        #= Only output paths that exists
         test -e $p; and echo $p
     end \
         | command sort --unique
@@ -282,8 +282,8 @@ function __zellij::screen::get_visible_files
 end
 
 function __zellij::screen::get_http_urls
-    # TODO: <kpbaks 2023-08-24 20:40:45> maybe strip out query params
-    # NOTE: <kpbaks 2023-08-24 11:48:27> not perfect regex, but good enough
+    #= TODO: <kpbaks 2023-08-24 20:40:45> maybe strip out query params
+    #= NOTE: <kpbaks 2023-08-24 11:48:27> not perfect regex, but good enough
     set -l regexp "(https?://[^\s\"^]+)"
     __zellij::screen::dump \
         | string match --regex --all --groups-only $regexp
@@ -355,7 +355,7 @@ function __zellij::screen::fuzzy_select_http_urls_and_add_them_at_cursor
     test $status -eq 0; or return 1 # Happens if the there are no urls on the screen
     test (count $selected_urls) -gt 0; or return 10 # Happens if the user presses <esc> in fzf
 
-    # Check if the commandline is not empty
+    #= Check if the commandline is not empty
     if test (commandline | string trim) != ""
         # If it, insert all urls separated by a space at the cursor
         # NOTE: A " " is appended to the end of the inserted text
@@ -364,7 +364,7 @@ function __zellij::screen::fuzzy_select_http_urls_and_add_them_at_cursor
         return 0
     end
 
-    # TODO: <kpbaks 2023-08-26 00:53:24> maybe do something special if only 1 url is selected
+    #= TODO: <kpbaks 2023-08-26 00:53:24> maybe do something special if only 1 url is selected
     set -l text_to_insert
 
     set -l default_cmd $ZELLIJ_FISH_DEFAULT_CMD_IF_COMMANDLINE_EMPTY_FOR_ADD_AT_CURSOR
@@ -402,7 +402,7 @@ function __zellij::screen::fuzzy_select_http_urls_and_copy_them_to_clipboard
     printf "%s\n" $selected_urls | fish_clipboard_copy
 end
 
-# TODO: <kpbaks 2023-08-26 00:16:39> Check if the keymap is already bound to something else. If it is print a warning.
+#= TODO: <kpbaks 2023-08-26 00:16:39> Check if the keymap is already bound to something else. If it is print a warning.
 # set -l mode zellij
 
 # bind --user $ZELLIJ_FISH_KEYMAP_OPEN_URL '__zellij::fuzzy_select_visible_http_urls_and_open'_in_browser
