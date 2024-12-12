@@ -1,4 +1,4 @@
-function __zellij::auto-start
+function __zellij::auto_start
     set -q ZELLIJ_PANE_ID && return
 
     set -U ZELLIJ_DISABLE_AUTO_EXIT_ONLY_ONCE false
@@ -19,21 +19,21 @@ function __zellij::auto-start
 end
 
 
-function __zellij::auto-exit:disable
+function __zellij::auto_exit:disable
     set -U ZELLIJ_AUTO_EXIT false
 end
 
 
-function __zellij::auto-start:disable
+function __zellij::auto_start:disable
     set -U ZELLIJ_AUTO_START false
 end
 
 
-function __zellij::auto-exit:enable
+function __zellij::auto_exit:enable
     set -U ZELLIJ_AUTO_EXIT true
 end
 
 
-function __zellij::auto-start:enable
+function __zellij::auto_start:enable
     set -U ZELLIJ_AUTO_START true
 end
